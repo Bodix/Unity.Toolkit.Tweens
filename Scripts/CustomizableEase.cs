@@ -18,13 +18,13 @@ namespace Toolkit.Tweens
 		{
 			IsCustom = false;
 			Ease = ease;
-			CustomCurve = AnimationCurve.Constant(0, 1, 1);
+			CustomCurve = AnimationCurve.Linear(0, 0, 1, 1);
 		}
 
 		public CustomizableEase(AnimationCurve curve)
 		{
 			IsCustom = true;
-			Ease = Ease.Unset;
+			Ease = Ease.Linear;
 			CustomCurve = curve;
 		}
 	}

@@ -3,6 +3,7 @@
 
 using DG.Tweening;
 using NaughtyAttributes;
+using Toolkit.Tweens.Extensions;
 using UnityEngine;
 
 namespace Toolkit.Tweens.Animations
@@ -11,7 +12,7 @@ namespace Toolkit.Tweens.Animations
 	{
 		public Vector3 PositionDelta = new Vector3(0, 0, 1);
 		public float Duration = 1;
-		public CustomizableEase Ease;
+		public CustomizableEase Ease = new CustomizableEase(DG.Tweening.Ease.Linear);
 
 		[SerializeField]
 		private bool SameGameObjectWithTarget = false;
@@ -34,24 +35,16 @@ namespace Toolkit.Tweens.Animations
 		{
 			InitializeIfRequired();
 
-			Tween tween = Transform.DOBlendableMoveBy(PositionDelta, Duration);
-			if (Ease.IsCustom)
-				tween.SetEase(Ease.CustomCurve);
-			else tween.SetEase(Ease.Ease);
-
-			return tween;
+			return Transform.DOBlendableMoveBy(PositionDelta, Duration)
+				.SetEase(Ease);
 		}
 
 		public Tween Play(Vector3 delta)
 		{
 			InitializeIfRequired();
 
-			Tween tween = Transform.DOBlendableMoveBy(delta, Duration);
-			if (Ease.IsCustom)
-				tween.SetEase(Ease.CustomCurve);
-			else tween.SetEase(Ease.Ease);
-
-			return tween;
+			return Transform.DOBlendableMoveBy(delta, Duration)
+				.SetEase(Ease);
 		}
 
 		private void InitializeIfRequired()
