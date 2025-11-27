@@ -9,11 +9,9 @@ namespace Toolkit.Tweens.Animations
 {
 	public class BlendableMoveAnimation : AnimationTweenBehaviour
 	{
-		public Vector3 PositionDelta = new Vector3(1, 1, 1);
+		public Vector3 PositionDelta = new Vector3(0, 0, 1);
 		public float Duration = 1;
-		public Ease XEase = Ease.Linear;
-		public Ease YEase = Ease.Linear;
-		public Ease ZEase = Ease.Linear;
+		public CustomizableEase Ease;
 
 		[SerializeField]
 		private bool SameGameObjectWithTarget = false;
@@ -36,16 +34,24 @@ namespace Toolkit.Tweens.Animations
 		{
 			InitializeIfRequired();
 
-			return Transform.DOBlendableMoveBy(PositionDelta, Duration)
-				.SetEase(XEase);
+			Tween tween = Transform.DOBlendableMoveBy(PositionDelta, Duration);
+			if (Ease.IsCustom)
+				tween.SetEase(Ease.CustomCurve);
+			else tween.SetEase(Ease.Ease);
+
+			return tween;
 		}
 
 		public Tween Play(Vector3 delta)
 		{
 			InitializeIfRequired();
 
-			return Transform.DOBlendableMoveBy(delta, Duration)
-				.SetEase(XEase);
+			Tween tween = Transform.DOBlendableMoveBy(delta, Duration);
+			if (Ease.IsCustom)
+				tween.SetEase(Ease.CustomCurve);
+			else tween.SetEase(Ease.Ease);
+
+			return tween;
 		}
 
 		private void InitializeIfRequired()
