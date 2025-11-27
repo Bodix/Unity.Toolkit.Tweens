@@ -8,7 +8,7 @@ namespace Toolkit.Tweens.Animations
     [Serializable]
     public struct CompositeAnimationPart
     {
-        public InOutTweenBehaviour TweenBehaviour;
+        public TransitionTweenBehaviour TweenBehaviour;
         public float Position;
     }
 }

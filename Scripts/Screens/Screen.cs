@@ -7,7 +7,7 @@ namespace Toolkit.Tweens.Screens
     public class Screen : AbstractAnimatedScreen
     {
         [SerializeField]
-        private InOutTweenBehaviour _tweenBehaviour;
+        private TransitionTweenBehaviour _tweenBehaviour;
 
         public override void Show()
         {

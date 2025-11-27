@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Toolkit.Tweens.Animations
 {
-    public class TextSizeAnimation : InOutTweenBehaviour
+    public class TextSizeAnimation : TransitionTweenBehaviour
     {
         public float TargetSize = 36;
         public float InitialSize = 24;

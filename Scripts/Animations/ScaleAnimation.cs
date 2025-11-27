@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Toolkit.Tweens.Animations
 {
-    public class ScaleAnimation : InOutTweenBehaviour
+    public class ScaleAnimation : TransitionTweenBehaviour
     {
         public Vector3 TargetScale = new Vector3(1, 1, 1);
         public Vector3 InitialScale = new Vector3(0, 0, 0);

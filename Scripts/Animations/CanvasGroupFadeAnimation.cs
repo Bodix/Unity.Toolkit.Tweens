@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Toolkit.Tweens.Animations
 {
-    public class CanvasGroupFadeAnimation : InOutTweenBehaviour
+    public class CanvasGroupFadeAnimation : TransitionTweenBehaviour
     {
         public float TargetAlpha = 1;
         public float InitialAlpha = 0;

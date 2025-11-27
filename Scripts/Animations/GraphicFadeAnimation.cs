@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace Toolkit.Tweens.Animations
 {
-    public class GraphicFadeAnimation : InOutTweenBehaviour
+    public class GraphicFadeAnimation : TransitionTweenBehaviour
     {
         public float TargetAlpha = 1;
         public float InitialAlpha = 0;

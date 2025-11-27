@@ -7,16 +7,16 @@ using UnityEngine;
 
 namespace Toolkit.Tweens.Animations
 {
-    public class SequenceAnimation : InOutTweenBehaviour
+    public class SequenceAnimation : TransitionTweenBehaviour
     {
         [SerializeField]
-        private InOutTweenBehaviour[] _tweenBehaviours;
+        private TransitionTweenBehaviour[] _tweenBehaviours;
 
         public override Tween PlayIn()
         {
             Sequence sequence = DOTween.Sequence();
 
-            foreach (InOutTweenBehaviour behaviour in _tweenBehaviours)
+            foreach (TransitionTweenBehaviour behaviour in _tweenBehaviours)
                 sequence.Append(behaviour.PlayIn());
 
             return sequence;
@@ -27,7 +27,7 @@ namespace Toolkit.Tweens.Animations
             Sequence sequence = DOTween.Sequence();
 
             // In reversed order.
-            foreach (InOutTweenBehaviour behaviour in _tweenBehaviours.Reverse())
+            foreach (TransitionTweenBehaviour behaviour in _tweenBehaviours.Reverse())
                 sequence.Append(behaviour.PlayOut());
 
             return sequence;

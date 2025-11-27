@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Toolkit.Tweens.Animations
 {
-    public class CompositeAnimation : InOutTweenBehaviour
+    public class CompositeAnimation : TransitionTweenBehaviour
     {
         [SerializeField]
         private CompositeAnimationPart[] _tweenBehaviours;
