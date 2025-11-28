@@ -38,7 +38,8 @@ namespace Toolkit.Tweens.Animations
             InitializeIfRequired();
 
             return DOVirtual.Float(InitialSize, TargetSize, InDuration, value => Text.fontSize = value)
-                .SetEase(EaseIn);
+                .SetEase(EaseIn)
+                .SetLink(Text.gameObject);
         }
 
         public override Tween PlayOut()
@@ -46,7 +47,8 @@ namespace Toolkit.Tweens.Animations
             InitializeIfRequired();
 
             return DOVirtual.Float(TargetSize, InitialSize, OutDuration, value => Text.fontSize = value)
-                .SetEase(EaseOut);
+                .SetEase(EaseOut)
+                .SetLink(Text.gameObject);
         }
 
         private void InitializeIfRequired()

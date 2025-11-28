@@ -36,7 +36,8 @@ namespace Toolkit.Tweens.Animations
 
             return Transform.DOScale(TargetScale, InDuration)
                 .From(InitialScale)
-                .SetEase(InEase);
+                .SetEase(InEase)
+                .SetLink(Transform.gameObject);
         }
 
         public override Tween PlayOut()
@@ -45,7 +46,8 @@ namespace Toolkit.Tweens.Animations
 
             return Transform.DOScale(InitialScale, OutDuration)
                 .From(TargetScale)
-                .SetEase(OutEase);
+                .SetEase(OutEase)
+                .SetLink(Transform.gameObject);
         }
 
         private void InitializeIfRequired()

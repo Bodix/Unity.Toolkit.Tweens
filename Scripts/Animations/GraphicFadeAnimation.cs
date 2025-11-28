@@ -39,7 +39,8 @@ namespace Toolkit.Tweens.Animations
 
             return Graphic.DOFade(TargetAlpha, InDuration)
                 .From(InitialAlpha)
-                .SetEase(InEase);
+                .SetEase(InEase)
+                .SetLink(Graphic.gameObject);
         }
 
         public override Tween PlayOut()
@@ -48,7 +49,8 @@ namespace Toolkit.Tweens.Animations
 
             return Graphic.DOFade(InitialAlpha, OutDuration)
                 .From(TargetAlpha)
-                .SetEase(OutEase);
+                .SetEase(OutEase)
+                .SetLink(Graphic.gameObject);
         }
 
         private void InitializeIfRequired()

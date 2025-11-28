@@ -56,10 +56,12 @@ namespace Toolkit.Tweens.Animations
 					.Insert(0, Transform.DOBlendableMoveBy(delta.WithX(0).WithZ(0), Duration)
 						.SetEase(YEase))
 					.Insert(0, Transform.DOBlendableMoveBy(delta.WithX(0).WithY(0), Duration)
-						.SetEase(ZEase));
+						.SetEase(ZEase))
+					.SetLink(Transform.gameObject);
 			else
 				return Transform.DOBlendableMoveBy(delta, Duration)
-					.SetEase(Ease);
+					.SetEase(Ease)
+					.SetLink(Transform.gameObject);
 		}
 
 		private void InitializeIfRequired()
