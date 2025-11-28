@@ -2,6 +2,7 @@
 // All Rights Reserved
 
 using DG.Tweening;
+using Evolutex.Evolunity.Extensions;
 using NaughtyAttributes;
 using Toolkit.Tweens.Extensions;
 using UnityEngine;
@@ -12,7 +13,15 @@ namespace Toolkit.Tweens.Animations
 	{
 		public Vector3 PositionDelta = new Vector3(0, 0, 1);
 		public float Duration = 1;
+		public bool SplitEasingByAxes = false;
+		[HideIf(nameof(SplitEasingByAxes))]
 		public CustomizableEase Ease = new CustomizableEase(DG.Tweening.Ease.Linear);
+		[ShowIf(nameof(SplitEasingByAxes))]
+		public CustomizableEase XEase = new CustomizableEase(DG.Tweening.Ease.Linear);
+		[ShowIf(nameof(SplitEasingByAxes))]
+		public CustomizableEase YEase = new CustomizableEase(DG.Tweening.Ease.Linear);
+		[ShowIf(nameof(SplitEasingByAxes))]
+		public CustomizableEase ZEase = new CustomizableEase(DG.Tweening.Ease.Linear);
 
 		[SerializeField]
 		private bool SameGameObjectWithTarget = false;
@@ -33,18 +42,24 @@ namespace Toolkit.Tweens.Animations
 
 		public override Tween Play()
 		{
-			InitializeIfRequired();
-
-			return Transform.DOBlendableMoveBy(PositionDelta, Duration)
-				.SetEase(Ease);
+			return Play(PositionDelta);
 		}
 
 		public Tween Play(Vector3 delta)
 		{
 			InitializeIfRequired();
 
-			return Transform.DOBlendableMoveBy(delta, Duration)
-				.SetEase(Ease);
+			if (SplitEasingByAxes)
+				return DOTween.Sequence()
+					.Insert(0, Transform.DOBlendableMoveBy(delta.WithY(0).WithZ(0), Duration)
+						.SetEase(XEase))
+					.Insert(0, Transform.DOBlendableMoveBy(delta.WithX(0).WithZ(0), Duration)
+						.SetEase(YEase))
+					.Insert(0, Transform.DOBlendableMoveBy(delta.WithX(0).WithY(0), Duration)
+						.SetEase(ZEase));
+			else
+				return Transform.DOBlendableMoveBy(delta, Duration)
+					.SetEase(Ease);
 		}
 
 		private void InitializeIfRequired()

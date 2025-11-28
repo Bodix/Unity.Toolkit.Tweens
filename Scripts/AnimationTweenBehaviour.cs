@@ -2,6 +2,7 @@
 // All Rights Reserved
 
 using DG.Tweening;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace Toolkit.Tweens
@@ -9,5 +10,11 @@ namespace Toolkit.Tweens
 	public abstract class AnimationTweenBehaviour : MonoBehaviour
 	{
 		public abstract Tween Play();
+
+		[Button("Play")]
+		protected void TestPlay()
+		{
+			Play();
+		}
 	}
 }
