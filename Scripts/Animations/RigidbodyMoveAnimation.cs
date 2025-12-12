@@ -10,7 +10,7 @@ namespace Toolkit.Tweens.Animations
 {
 	public class RigidbodyMoveAnimation : AnimationTweenBehaviour
 	{
-		public Vector3 PositionDelta = new Vector3(0, 0, 1);
+		public Vector3 TargetPosition = new Vector3(0, 0, 1);
 		public float Duration = 1;
 		public bool SplitEasingByAxes = false;
 		[HideIf(nameof(SplitEasingByAxes))]
@@ -41,24 +41,24 @@ namespace Toolkit.Tweens.Animations
 
 		public override Tween Play()
 		{
-			return Play(PositionDelta);
+			return Play(TargetPosition);
 		}
 
-		public Tween Play(Vector3 delta)
+		public Tween Play(Vector3 targetPosition)
 		{
 			InitializeIfRequired();
 
 			if (SplitEasingByAxes)
 				return DOTween.Sequence()
-					.Insert(0, Rigidbody.DOMoveX(delta.x, Duration)
+					.Insert(0, Rigidbody.DOMoveX(targetPosition.x, Duration)
 						.SetEase(XEase))
-					.Insert(0, Rigidbody.DOMoveY(delta.y, Duration)
+					.Insert(0, Rigidbody.DOMoveY(targetPosition.y, Duration)
 						.SetEase(YEase))
-					.Insert(0, Rigidbody.DOMoveZ(delta.z, Duration)
+					.Insert(0, Rigidbody.DOMoveZ(targetPosition.z, Duration)
 						.SetEase(ZEase))
 					.SetLink(Rigidbody.gameObject);
 			else
-				return Rigidbody.DOMove(delta, Duration)
+				return Rigidbody.DOMove(targetPosition, Duration)
 					.SetEase(Ease)
 					.SetLink(Rigidbody.gameObject);
 		}
