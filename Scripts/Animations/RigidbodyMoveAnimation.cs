@@ -12,14 +12,15 @@ namespace Toolkit.Tweens.Animations
 	{
 		public Vector3 TargetPosition = new Vector3(0, 0, 1);
 		public float Duration = 1;
+		[ValidateInput(nameof(IsRigidbodyNotKinematic), nameof(SplitEasingByAxes) + " works only with `Rigidbody.isKinematic == false`")]
 		public bool SplitEasingByAxes = false;
-		[HideIf(nameof(SplitEasingByAxes))]
+		[HideIf(nameof(IsSplitEasingByAxesWorks))]
 		public CustomizableEase Ease = new CustomizableEase(DG.Tweening.Ease.Linear);
-		[ShowIf(nameof(SplitEasingByAxes))]
+		[ShowIf(nameof(IsSplitEasingByAxesWorks))]
 		public CustomizableEase XEase = new CustomizableEase(DG.Tweening.Ease.Linear);
-		[ShowIf(nameof(SplitEasingByAxes))]
+		[ShowIf(nameof(IsSplitEasingByAxesWorks))]
 		public CustomizableEase YEase = new CustomizableEase(DG.Tweening.Ease.Linear);
-		[ShowIf(nameof(SplitEasingByAxes))]
+		[ShowIf(nameof(IsSplitEasingByAxesWorks))]
 		public CustomizableEase ZEase = new CustomizableEase(DG.Tweening.Ease.Linear);
 
 		[SerializeField]
@@ -47,8 +48,9 @@ namespace Toolkit.Tweens.Animations
 		public Tween Play(Vector3 targetPosition)
 		{
 			InitializeIfRequired();
+			ValidateSplitEasingByAxes();
 
-			if (SplitEasingByAxes)
+			if (IsSplitEasingByAxesWorks())
 				return DOTween.Sequence()
 					.Insert(0, Rigidbody.DOMoveX(targetPosition.x, Duration)
 						.SetEase(XEase))
@@ -67,6 +69,27 @@ namespace Toolkit.Tweens.Animations
 		{
 			if (!Rigidbody && SameGameObjectWithTarget)
 				_rigidbody = GetComponent<Rigidbody>();
+		}
+
+		private void ValidateSplitEasingByAxes()
+		{
+			if (SplitEasingByAxes && !IsSplitEasingByAxesWorks())
+				Debug.LogError("Trying to split easing by axes when it's not possible. The split was not carried out");
+		}
+
+		private bool IsRigidbodyNotKinematic()
+		{
+			return Rigidbody && !Rigidbody.isKinematic;
+		}
+
+		/// <summary>
+		/// DOMoveX, DOMoveY and DOMoveZ methods will "lock" other axes by the tween.
+		/// <see href="https://dotween.demigiant.com/documentation.php?api=DOMoveX"/>
+		/// It won't happen for some reason when Rigidbody is not kinematic.
+		/// </summary>
+		private bool IsSplitEasingByAxesWorks()
+		{
+			return SplitEasingByAxes && IsRigidbodyNotKinematic();
 		}
 	}
 }
