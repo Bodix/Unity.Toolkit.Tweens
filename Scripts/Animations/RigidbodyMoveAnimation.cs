@@ -74,7 +74,8 @@ namespace Toolkit.Tweens.Animations
 		private void ValidateSplitEasingByAxes()
 		{
 			if (SplitEasingByAxes && !IsSplitEasingByAxesWorks())
-				Debug.LogError("Trying to split easing by axes when it's not possible. The split was not carried out");
+				Debug.LogError("Trying to split easing by axes when it's not possible " +
+					"because Rigidbody is kinematic. The split was not carried out");
 		}
 
 		private bool IsRigidbodyNotKinematic()
