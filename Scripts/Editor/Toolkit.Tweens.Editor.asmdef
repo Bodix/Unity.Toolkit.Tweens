@@ -1,0 +1,15 @@
+{
+    "name": "Toolkit.Tweens.Editor",
+    "references": [
+        "GUID:1ca9912c9a4dcd341958ad5d7768a1b5"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
