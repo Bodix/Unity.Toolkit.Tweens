@@ -1,7 +1,35 @@
 {
     "name": "com.evolutex.toolkit.tweens",
-    "displayName": "Toolkit.Tweens",
     "version": "1.0.0",
+    "description": "Utilities for DOTween package",
+    "displayName": "Toolkit.Tweens",
     "unity": "2019.4",
-    "description": "Utilities for DOTween package"
+    "author": {
+        "name": "Bodix",
+        "email": "bodix321@gmail.com",
+        "url": "https://github.com/Bodix/Unity.Toolkit.Tweens"
+    },
+    "keywords": [
+        "package",
+        "library",
+        "extensions",
+        "utility",
+        "utilities",
+        "utility-library",
+        "utilities-library",
+        "tool",
+        "tools",
+        "toolkit",
+        "scripts",
+        "scripting",
+        "scripts-collection",
+        "productivity",
+        "unity",
+        "unity3d",
+        "unity-development",
+        "asset",
+        "tween",
+        "tweens",
+        "DOTween"
+    ]
 }
