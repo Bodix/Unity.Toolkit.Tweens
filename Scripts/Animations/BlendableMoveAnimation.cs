@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Toolkit.Tweens.Animations
 {
-	public class BlendableMoveAnimation : AnimationTweenBehaviour
+	public class BlendableMoveAnimation : TweenAnimation
 	{
 		public Vector3 PositionDelta = new Vector3(0, 0, 1);
 		public float Duration = 1;

@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Toolkit.Tweens.Animations
 {
-	public class RigidbodyJumpAnimation : AnimationTweenBehaviour
+	public class RigidbodyJumpAnimation : TweenAnimation
 	{
 		[ValidateInput(nameof(IsRigidbodyNotKinematic), "This component works only with `Rigidbody.isKinematic == false`")]
 		public Vector3 TargetPosition = new Vector3(0, 0, 1);

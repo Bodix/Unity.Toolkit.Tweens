@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Toolkit.Tweens.Animations
 {
-	public class JumpAnimation : AnimationTweenBehaviour
+	public class JumpAnimation : TweenAnimation
 	{
 		public Vector3 TargetPosition = new Vector3(0, 0, 1);
 		public float JumpPower = 1;

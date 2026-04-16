@@ -5,20 +5,20 @@ using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 
-namespace Toolkit.Tweens.Animations
+namespace Toolkit.Tweens.Transitions
 {
-    public class CompositeAnimation : TransitionTweenBehaviour
+    public class CompositeTransition : TweenTransition
     {
         [SerializeField]
-        private CompositeAnimationPart[] _tweenBehaviours;
+        private CompositeTransitionPart[] _tweenBehaviours;
 
         public override Tween PlayIn()
         {
             Sequence sequence = DOTween.Sequence();
 
-            foreach (CompositeAnimationPart part in _tweenBehaviours)
+            foreach (CompositeTransitionPart part in _tweenBehaviours)
             {
-                Tween tween = part.TweenBehaviour.PlayIn();
+                Tween tween = part.Transition.PlayIn();
 
                 // To prewarm tween initial state.
                 tween.ManualUpdate(float.MinValue, float.MinValue);
@@ -35,9 +35,9 @@ namespace Toolkit.Tweens.Animations
 
             // In reversed order.
             float maxPosition = _tweenBehaviours.Select(x => x.Position).Max();
-            foreach (CompositeAnimationPart part in _tweenBehaviours)
+            foreach (CompositeTransitionPart part in _tweenBehaviours)
             {
-                Tween tween = part.TweenBehaviour.PlayOut();
+                Tween tween = part.Transition.PlayOut();
 
                 // To prewarm tween initial state.
                 tween.ManualUpdate(float.MinValue, float.MinValue);

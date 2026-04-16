@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Toolkit.Tweens
 {
-	public abstract class TransitionTweenBehaviour : MonoBehaviour
+	public abstract class TweenTransition : MonoBehaviour
 	{
 		public abstract Tween PlayIn();
 

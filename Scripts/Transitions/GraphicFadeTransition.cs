@@ -6,9 +6,9 @@ using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Toolkit.Tweens.Animations
+namespace Toolkit.Tweens.Transitions
 {
-    public class GraphicFadeAnimation : TransitionTweenBehaviour
+    public class GraphicFadeTransition : TweenTransition
     {
         public float TargetAlpha = 1;
         public float InitialAlpha = 0;

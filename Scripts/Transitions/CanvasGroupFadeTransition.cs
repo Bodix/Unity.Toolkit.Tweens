@@ -5,9 +5,9 @@ using DG.Tweening;
 using NaughtyAttributes;
 using UnityEngine;
 
-namespace Toolkit.Tweens.Animations
+namespace Toolkit.Tweens.Transitions
 {
-    public class CanvasGroupFadeAnimation : TransitionTweenBehaviour
+    public class CanvasGroupFadeTransition : TweenTransition
     {
         public float TargetAlpha = 1;
         public float InitialAlpha = 0;
