@@ -14,9 +14,15 @@ namespace Toolkit.Tweens.Screens
 			set => gameObject.SetActive(value);
 		}
 
-		public abstract void Show();
+		public virtual void Show()
+		{
+			IsEnabled = true;
+		}
 
-		public abstract void Hide();
+		public virtual void Hide()
+		{
+			IsEnabled = false;
+		}
 
 		public virtual Tween Push()
 		{
