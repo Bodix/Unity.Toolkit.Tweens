@@ -8,55 +8,55 @@ using UnityEngine.UI;
 
 namespace Toolkit.Tweens.Transitions
 {
-    public class GraphicFadeTransition : TweenTransition
-    {
-        public float TargetAlpha = 1;
-        public float InitialAlpha = 0;
-        public float InDuration = 1;
-        public float OutDuration = 1;
-        public Ease InEase = Ease.Linear;
-        public Ease OutEase = Ease.Linear;
+	public class GraphicFadeTransition : TweenTransition
+	{
+		public float TargetAlpha = 1;
+		public float InitialAlpha = 0;
+		public float InDuration = 1;
+		public float OutDuration = 1;
+		public Ease InEase = Ease.Linear;
+		public Ease OutEase = Ease.Linear;
 
-        [SerializeField, HideIf(nameof(SameGameObjectWithTarget))]
-        private Graphic _graphic;
+		[SerializeField, HideIf(nameof(SameGameObjectWithTarget))]
+		private Graphic _graphic;
 
-        public Graphic Graphic => _graphic;
-        private bool SameGameObjectWithTarget => _graphic && _graphic.gameObject == gameObject;
+		public Graphic Graphic => _graphic;
+		private bool SameGameObjectWithTarget => _graphic && _graphic.gameObject == gameObject;
 
-        private void Awake()
-        {
-            InitializeIfRequired();
-        }
-        
-        private void OnValidate()
-        {
-            InitializeIfRequired();
-        }
+		private void Awake()
+		{
+			InitializeIfRequired();
+		}
 
-        public override Tween PlayIn()
-        {
-            InitializeIfRequired();
+		private void OnValidate()
+		{
+			InitializeIfRequired();
+		}
 
-            return Graphic.DOFade(TargetAlpha, InDuration)
-                .From(InitialAlpha)
-                .SetEase(InEase)
-                .SetLink(Graphic.gameObject);
-        }
+		public override Tween PlayIn()
+		{
+			InitializeIfRequired();
 
-        public override Tween PlayOut()
-        {
-            InitializeIfRequired();
+			return Graphic.DOFade(TargetAlpha, InDuration)
+				.From(InitialAlpha)
+				.SetEase(InEase)
+				.SetLink(Graphic.gameObject);
+		}
 
-            return Graphic.DOFade(InitialAlpha, OutDuration)
-                .From(TargetAlpha)
-                .SetEase(OutEase)
-                .SetLink(Graphic.gameObject);
-        }
+		public override Tween PlayOut()
+		{
+			InitializeIfRequired();
 
-        private void InitializeIfRequired()
-        {
-            if (!Graphic)
-                _graphic = GetComponent<Graphic>();
-        }
-    }
+			return Graphic.DOFade(InitialAlpha, OutDuration)
+				.From(TargetAlpha)
+				.SetEase(OutEase)
+				.SetLink(Graphic.gameObject);
+		}
+
+		private void InitializeIfRequired()
+		{
+			if (!Graphic)
+				_graphic = GetComponent<Graphic>();
+		}
+	}
 }

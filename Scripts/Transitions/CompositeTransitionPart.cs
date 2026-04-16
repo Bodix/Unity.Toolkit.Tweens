@@ -6,11 +6,11 @@ using UnityEngine.Serialization;
 
 namespace Toolkit.Tweens.Transitions
 {
-    [Serializable]
-    public struct CompositeTransitionPart
-    {
-	    [FormerlySerializedAs("TweenBehaviour")]
-        public TweenTransition Transition;
-        public float Position;
-    }
+	[Serializable]
+	public struct CompositeTransitionPart
+	{
+		[FormerlySerializedAs("TweenBehaviour")]
+		public TweenTransition Transition;
+		public float Position;
+	}
 }

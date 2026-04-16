@@ -7,45 +7,45 @@ using UnityEngine;
 
 namespace Toolkit.Tweens.Transitions
 {
-    public class CompositeTransition : TweenTransition
-    {
-        [SerializeField]
-        private CompositeTransitionPart[] _tweenBehaviours;
+	public class CompositeTransition : TweenTransition
+	{
+		[SerializeField]
+		private CompositeTransitionPart[] _tweenBehaviours;
 
-        public override Tween PlayIn()
-        {
-            Sequence sequence = DOTween.Sequence();
+		public override Tween PlayIn()
+		{
+			Sequence sequence = DOTween.Sequence();
 
-            foreach (CompositeTransitionPart part in _tweenBehaviours)
-            {
-                Tween tween = part.Transition.PlayIn();
+			foreach (CompositeTransitionPart part in _tweenBehaviours)
+			{
+				Tween tween = part.Transition.PlayIn();
 
-                // To prewarm tween initial state.
-                tween.ManualUpdate(float.MinValue, float.MinValue);
+				// To prewarm tween initial state.
+				tween.ManualUpdate(float.MinValue, float.MinValue);
 
-                sequence.Insert(part.Position, tween);
-            }
+				sequence.Insert(part.Position, tween);
+			}
 
-            return sequence;
-        }
+			return sequence;
+		}
 
-        public override Tween PlayOut()
-        {
-            Sequence sequence = DOTween.Sequence();
+		public override Tween PlayOut()
+		{
+			Sequence sequence = DOTween.Sequence();
 
-            // In reversed order.
-            float maxPosition = _tweenBehaviours.Select(x => x.Position).Max();
-            foreach (CompositeTransitionPart part in _tweenBehaviours)
-            {
-                Tween tween = part.Transition.PlayOut();
+			// In reversed order.
+			float maxPosition = _tweenBehaviours.Select(x => x.Position).Max();
+			foreach (CompositeTransitionPart part in _tweenBehaviours)
+			{
+				Tween tween = part.Transition.PlayOut();
 
-                // To prewarm tween initial state.
-                tween.ManualUpdate(float.MinValue, float.MinValue);
+				// To prewarm tween initial state.
+				tween.ManualUpdate(float.MinValue, float.MinValue);
 
-                sequence.Insert(maxPosition - part.Position, tween);
-            }
+				sequence.Insert(maxPosition - part.Position, tween);
+			}
 
-            return sequence;
-        }
-    }
+			return sequence;
+		}
+	}
 }
