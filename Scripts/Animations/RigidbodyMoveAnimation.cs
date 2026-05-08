@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Toolkit.Tweens.Animations
 {
-	public class RigidbodyMoveAnimation : TweenAnimation
+	public class RigidbodyMoveAnimation : TweenAnimation<Rigidbody>
 	{
 		public Vector3 TargetPosition = new Vector3(0, 0, 1);
 		public float Duration = 1;
@@ -23,23 +23,6 @@ namespace Toolkit.Tweens.Animations
 		[ShowIf(nameof(IsSplitEasingByAxesWorks))]
 		public CustomizableEase ZEase = new CustomizableEase(DG.Tweening.Ease.Linear);
 
-		[SerializeField]
-		private bool SameGameObjectWithTarget = false;
-		[SerializeField, HideIf(nameof(SameGameObjectWithTarget))]
-		private Rigidbody _rigidbody;
-
-		public Rigidbody Rigidbody => _rigidbody;
-
-		private void Awake()
-		{
-			InitializeIfRequired();
-		}
-
-		private void OnValidate()
-		{
-			InitializeIfRequired();
-		}
-
 		public override Tween Play()
 		{
 			return Play(TargetPosition);
@@ -52,23 +35,17 @@ namespace Toolkit.Tweens.Animations
 
 			if (IsSplitEasingByAxesWorks())
 				return DOTween.Sequence()
-					.Insert(0, Rigidbody.DOMoveX(targetPosition.x, Duration)
+					.Insert(0, Target.DOMoveX(targetPosition.x, Duration)
 						.SetEase(XEase))
-					.Insert(0, Rigidbody.DOMoveY(targetPosition.y, Duration)
+					.Insert(0, Target.DOMoveY(targetPosition.y, Duration)
 						.SetEase(YEase))
-					.Insert(0, Rigidbody.DOMoveZ(targetPosition.z, Duration)
+					.Insert(0, Target.DOMoveZ(targetPosition.z, Duration)
 						.SetEase(ZEase))
-					.SetLink(Rigidbody.gameObject);
+					.SetLink(Target.gameObject);
 			else
-				return Rigidbody.DOMove(targetPosition, Duration)
+				return Target.DOMove(targetPosition, Duration)
 					.SetEase(Ease)
-					.SetLink(Rigidbody.gameObject);
-		}
-
-		private void InitializeIfRequired()
-		{
-			if (!Rigidbody && SameGameObjectWithTarget)
-				_rigidbody = GetComponent<Rigidbody>();
+					.SetLink(Target.gameObject);
 		}
 
 		private void ValidateSplitEasingByAxes()
@@ -80,7 +57,7 @@ namespace Toolkit.Tweens.Animations
 
 		private bool IsRigidbodyNotKinematic()
 		{
-			return Rigidbody && !Rigidbody.isKinematic;
+			return Target && !Target.isKinematic;
 		}
 
 		/// <summary>

@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Toolkit.Tweens.Animations
 {
-	public class BlendableMoveAnimation : TweenAnimation
+	public class BlendableMoveAnimation : TweenAnimation<Transform>
 	{
 		public Vector3 PositionDelta = new Vector3(0, 0, 1);
 		public float Duration = 1;
@@ -23,23 +23,6 @@ namespace Toolkit.Tweens.Animations
 		[ShowIf(nameof(SplitEasingByAxes))]
 		public CustomizableEase ZEase = new CustomizableEase(DG.Tweening.Ease.Linear);
 
-		[SerializeField]
-		private bool SameGameObjectWithTarget = false;
-		[SerializeField, HideIf(nameof(SameGameObjectWithTarget))]
-		private Transform _transform;
-
-		public Transform Transform => _transform;
-
-		private void Awake()
-		{
-			InitializeIfRequired();
-		}
-
-		private void OnValidate()
-		{
-			InitializeIfRequired();
-		}
-
 		public override Tween Play()
 		{
 			return Play(PositionDelta);
@@ -51,23 +34,17 @@ namespace Toolkit.Tweens.Animations
 
 			if (SplitEasingByAxes)
 				return DOTween.Sequence()
-					.Insert(0, Transform.DOBlendableMoveBy(delta.WithY(0).WithZ(0), Duration)
+					.Insert(0, Target.DOBlendableMoveBy(delta.WithY(0).WithZ(0), Duration)
 						.SetEase(XEase))
-					.Insert(0, Transform.DOBlendableMoveBy(delta.WithX(0).WithZ(0), Duration)
+					.Insert(0, Target.DOBlendableMoveBy(delta.WithX(0).WithZ(0), Duration)
 						.SetEase(YEase))
-					.Insert(0, Transform.DOBlendableMoveBy(delta.WithX(0).WithY(0), Duration)
+					.Insert(0, Target.DOBlendableMoveBy(delta.WithX(0).WithY(0), Duration)
 						.SetEase(ZEase))
-					.SetLink(Transform.gameObject);
+					.SetLink(Target.gameObject);
 			else
-				return Transform.DOBlendableMoveBy(delta, Duration)
+				return Target.DOBlendableMoveBy(delta, Duration)
 					.SetEase(Ease)
-					.SetLink(Transform.gameObject);
-		}
-
-		private void InitializeIfRequired()
-		{
-			if (!Transform && SameGameObjectWithTarget)
-				_transform = transform;
+					.SetLink(Target.gameObject);
 		}
 	}
 }
