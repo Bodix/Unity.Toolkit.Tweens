@@ -2,12 +2,11 @@
 // All Rights Reserved
 
 using DG.Tweening;
-using NaughtyAttributes;
 using UnityEngine;
 
 namespace Toolkit.Tweens.Transitions
 {
-	public class CanvasGroupFadeTransition : TweenTransition
+	public class CanvasGroupFadeTransition : TweenTransition<CanvasGroup>
 	{
 		public float TargetAlpha = 1;
 		public float InitialAlpha = 0;
@@ -16,46 +15,24 @@ namespace Toolkit.Tweens.Transitions
 		public Ease InEase = Ease.Linear;
 		public Ease OutEase = Ease.Linear;
 
-		[SerializeField, HideIf(nameof(SameGameObjectWithTarget))]
-		private CanvasGroup _canvasGroup;
-
-		public CanvasGroup CanvasGroup => _canvasGroup;
-		private bool SameGameObjectWithTarget => _canvasGroup && _canvasGroup.gameObject == gameObject;
-
-		private void Awake()
-		{
-			InitializeIfRequired();
-		}
-
-		private void OnValidate()
-		{
-			InitializeIfRequired();
-		}
-
 		public override Tween PlayIn()
 		{
 			InitializeIfRequired();
 
-			return CanvasGroup.DOFade(TargetAlpha, InDuration)
+			return Target.DOFade(TargetAlpha, InDuration)
 				.From(InitialAlpha)
 				.SetEase(InEase)
-				.SetLink(CanvasGroup.gameObject);
+				.SetLink(Target.gameObject);
 		}
 
 		public override Tween PlayOut()
 		{
 			InitializeIfRequired();
 
-			return CanvasGroup.DOFade(InitialAlpha, OutDuration)
+			return Target.DOFade(InitialAlpha, OutDuration)
 				.From(TargetAlpha)
 				.SetEase(OutEase)
-				.SetLink(CanvasGroup.gameObject);
-		}
-
-		private void InitializeIfRequired()
-		{
-			if (!CanvasGroup)
-				_canvasGroup = GetComponent<CanvasGroup>();
+				.SetLink(Target.gameObject);
 		}
 	}
 }

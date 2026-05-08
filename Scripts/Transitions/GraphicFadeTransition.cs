@@ -2,13 +2,11 @@
 // All Rights Reserved
 
 using DG.Tweening;
-using NaughtyAttributes;
-using UnityEngine;
 using UnityEngine.UI;
 
 namespace Toolkit.Tweens.Transitions
 {
-	public class GraphicFadeTransition : TweenTransition
+	public class GraphicFadeTransition : TweenTransition<Graphic>
 	{
 		public float TargetAlpha = 1;
 		public float InitialAlpha = 0;
@@ -17,46 +15,24 @@ namespace Toolkit.Tweens.Transitions
 		public Ease InEase = Ease.Linear;
 		public Ease OutEase = Ease.Linear;
 
-		[SerializeField, HideIf(nameof(SameGameObjectWithTarget))]
-		private Graphic _graphic;
-
-		public Graphic Graphic => _graphic;
-		private bool SameGameObjectWithTarget => _graphic && _graphic.gameObject == gameObject;
-
-		private void Awake()
-		{
-			InitializeIfRequired();
-		}
-
-		private void OnValidate()
-		{
-			InitializeIfRequired();
-		}
-
 		public override Tween PlayIn()
 		{
 			InitializeIfRequired();
 
-			return Graphic.DOFade(TargetAlpha, InDuration)
+			return Target.DOFade(TargetAlpha, InDuration)
 				.From(InitialAlpha)
 				.SetEase(InEase)
-				.SetLink(Graphic.gameObject);
+				.SetLink(Target.gameObject);
 		}
 
 		public override Tween PlayOut()
 		{
 			InitializeIfRequired();
 
-			return Graphic.DOFade(InitialAlpha, OutDuration)
+			return Target.DOFade(InitialAlpha, OutDuration)
 				.From(TargetAlpha)
 				.SetEase(OutEase)
-				.SetLink(Graphic.gameObject);
-		}
-
-		private void InitializeIfRequired()
-		{
-			if (!Graphic)
-				_graphic = GetComponent<Graphic>();
+				.SetLink(Target.gameObject);
 		}
 	}
 }

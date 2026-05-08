@@ -1,10 +1,9 @@
 ﻿using DG.Tweening;
-using NaughtyAttributes;
 using UnityEngine;
 
 namespace Toolkit.Tweens.Transitions
 {
-	public class ScaleTransition : TweenTransition
+	public class ScaleTransition : TweenTransition<Transform>
 	{
 		public Vector3 TargetScale = new Vector3(1, 1, 1);
 		public Vector3 InitialScale = new Vector3(0, 0, 0);
@@ -13,47 +12,24 @@ namespace Toolkit.Tweens.Transitions
 		public Ease InEase = Ease.Linear;
 		public Ease OutEase = Ease.Linear;
 
-		[SerializeField]
-		private bool SameGameObjectWithTarget = false;
-		[SerializeField, HideIf(nameof(SameGameObjectWithTarget))]
-		private Transform _transform;
-
-		public Transform Transform => _transform;
-
-		private void Awake()
-		{
-			InitializeIfRequired();
-		}
-
-		private void OnValidate()
-		{
-			InitializeIfRequired();
-		}
-
 		public override Tween PlayIn()
 		{
 			InitializeIfRequired();
 
-			return Transform.DOScale(TargetScale, InDuration)
+			return Target.DOScale(TargetScale, InDuration)
 				.From(InitialScale)
 				.SetEase(InEase)
-				.SetLink(Transform.gameObject);
+				.SetLink(Target.gameObject);
 		}
 
 		public override Tween PlayOut()
 		{
 			InitializeIfRequired();
 
-			return Transform.DOScale(InitialScale, OutDuration)
+			return Target.DOScale(InitialScale, OutDuration)
 				.From(TargetScale)
 				.SetEase(OutEase)
-				.SetLink(Transform.gameObject);
-		}
-
-		private void InitializeIfRequired()
-		{
-			if (!Transform && SameGameObjectWithTarget)
-				_transform = transform;
+				.SetLink(Target.gameObject);
 		}
 	}
 }
