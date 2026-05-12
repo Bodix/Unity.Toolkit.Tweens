@@ -3,16 +3,14 @@
 
 using System.Linq;
 using DG.Tweening;
-using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace Toolkit.Tweens.Transitions
 {
 	public class CompositeTransition : TweenTransition
 	{
-		[SerializeField]
 		[FormerlySerializedAs("_tweenBehaviours")]
-		private CompositeTransitionPart[] Transitions;
+		public CompositeTransitionPart[] Transitions;
 
 		public override Tween PlayIn()
 		{

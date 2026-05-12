@@ -3,20 +3,20 @@
 
 using DG.Tweening;
 using Evolutex.Evolunity.Extensions;
-using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Toolkit.Tweens.Transitions
 {
 	public class SequenceTransition : TweenTransition
 	{
-		[SerializeField]
-		private TweenTransition[] _tweenBehaviours;
+		[FormerlySerializedAs("_tweenBehaviours")]
+		public TweenTransition[] Transitions;
 
 		public override Tween PlayIn()
 		{
 			Sequence sequence = DOTween.Sequence();
 
-			foreach (TweenTransition behaviour in _tweenBehaviours)
+			foreach (TweenTransition behaviour in Transitions)
 				sequence.Append(behaviour.PlayIn());
 
 			return sequence;
@@ -27,7 +27,7 @@ namespace Toolkit.Tweens.Transitions
 			Sequence sequence = DOTween.Sequence();
 
 			// In reversed order.
-			foreach (TweenTransition behaviour in _tweenBehaviours.Reverse())
+			foreach (TweenTransition behaviour in Transitions.Reverse())
 				sequence.Append(behaviour.PlayOut());
 
 			return sequence;

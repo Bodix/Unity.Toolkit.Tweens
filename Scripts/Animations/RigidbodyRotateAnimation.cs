@@ -22,7 +22,7 @@ namespace Toolkit.Tweens.Animations
 		{
 			InitializeIfRequired();
 
-			return Target.DOMove(targetPosition, Duration)
+			return Target.DORotate(targetPosition, Duration)
 				.SetEase(Ease)
 				.SetLink(Target.gameObject);
 		}

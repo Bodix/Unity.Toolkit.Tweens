@@ -1,12 +1,13 @@
-﻿using DG.Tweening;
-using UnityEngine;
+﻿// Copyright © 2025 Bogdan Nikolayev <bodix321@gmail.com>
+// All Rights Reserved
+
+using DG.Tweening;
 
 namespace Toolkit.Tweens.Animations
 {
 	public class CompositeAnimation : TweenAnimation
 	{
-		[SerializeField]
-		private CompositeAnimationPart[] Animations;
+		public CompositeAnimationPart[] Animations;
 
 		public override Tween Play()
 		{
