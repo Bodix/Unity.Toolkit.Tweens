@@ -2,7 +2,6 @@
 // All Rights Reserved
 
 using DG.Tweening;
-using NaughtyAttributes;
 using Toolkit.Tweens.Extensions;
 using UnityEngine;
 

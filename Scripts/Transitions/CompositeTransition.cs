@@ -4,19 +4,21 @@
 using System.Linq;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Toolkit.Tweens.Transitions
 {
 	public class CompositeTransition : TweenTransition
 	{
 		[SerializeField]
-		private CompositeTransitionPart[] _tweenBehaviours;
+		[FormerlySerializedAs("_tweenBehaviours")]
+		private CompositeTransitionPart[] Transitions;
 
 		public override Tween PlayIn()
 		{
 			Sequence sequence = DOTween.Sequence();
 
-			foreach (CompositeTransitionPart part in _tweenBehaviours)
+			foreach (CompositeTransitionPart part in Transitions)
 			{
 				Tween tween = part.Transition.PlayIn();
 
@@ -34,8 +36,8 @@ namespace Toolkit.Tweens.Transitions
 			Sequence sequence = DOTween.Sequence();
 
 			// In reversed order.
-			float maxPosition = _tweenBehaviours.Select(x => x.Position).Max();
-			foreach (CompositeTransitionPart part in _tweenBehaviours)
+			float maxPosition = Transitions.Select(x => x.Position).Max();
+			foreach (CompositeTransitionPart part in Transitions)
 			{
 				Tween tween = part.Transition.PlayOut();
 
