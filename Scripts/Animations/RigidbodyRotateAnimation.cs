@@ -2,29 +2,28 @@
 // All Rights Reserved
 
 using DG.Tweening;
+using NaughtyAttributes;
 using Toolkit.Tweens.Extensions;
 using UnityEngine;
 
 namespace Toolkit.Tweens.Animations
 {
-	public class JumpAnimation : TweenAnimation<Transform>
+	public class RigidbodyRotateAnimation : TweenAnimation<Rigidbody>
 	{
-		public Vector3 TargetPosition = Vector3.forward;
-		public float JumpPower = 1;
-		public int NumberOfJumps = 1;
+		public Vector3 TargetRotation = new Vector3(0, 180, 0);
 		public float Duration = 1;
 		public CustomizableEase Ease = new CustomizableEase(DG.Tweening.Ease.Linear);
 
 		public override Tween Play()
 		{
-			return Play(TargetPosition);
+			return Play(TargetRotation);
 		}
 
 		public Tween Play(Vector3 targetPosition)
 		{
 			InitializeIfRequired();
 
-			return Target.DOJump(targetPosition, JumpPower, NumberOfJumps, Duration)
+			return Target.DOMove(targetPosition, Duration)
 				.SetEase(Ease)
 				.SetLink(Target.gameObject);
 		}

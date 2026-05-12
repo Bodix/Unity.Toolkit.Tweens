@@ -11,7 +11,7 @@ namespace Toolkit.Tweens.Animations
 	public class RigidbodyJumpAnimation : TweenAnimation<Rigidbody>
 	{
 		[ValidateInput(nameof(IsRigidbodyNotKinematic), "This component works only with `Rigidbody.isKinematic == false`")]
-		public Vector3 TargetPosition = new Vector3(0, 0, 1);
+		public Vector3 TargetPosition = Vector3.forward;
 		public float JumpPower = 1;
 		public int NumberOfJumps = 1;
 		public float Duration = 1;

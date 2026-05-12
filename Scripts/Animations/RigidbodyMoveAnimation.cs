@@ -10,7 +10,7 @@ namespace Toolkit.Tweens.Animations
 {
 	public class RigidbodyMoveAnimation : TweenAnimation<Rigidbody>
 	{
-		public Vector3 TargetPosition = new Vector3(0, 0, 1);
+		public Vector3 TargetPosition = Vector3.forward;
 		public float Duration = 1;
 		[ValidateInput(nameof(IsRigidbodyNotKinematic), nameof(SplitEasingByAxes) + " works only with `Rigidbody.isKinematic == false`")]
 		public bool SplitEasingByAxes = false;

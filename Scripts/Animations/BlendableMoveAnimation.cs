@@ -11,7 +11,7 @@ namespace Toolkit.Tweens.Animations
 {
 	public class BlendableMoveAnimation : TweenAnimation<Transform>
 	{
-		public Vector3 PositionDelta = new Vector3(0, 0, 1);
+		public Vector3 PositionDelta = Vector3.forward;
 		public float Duration = 1;
 		public bool SplitEasingByAxes = false;
 		[HideIf(nameof(SplitEasingByAxes))]
