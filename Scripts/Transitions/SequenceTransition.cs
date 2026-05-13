@@ -16,8 +16,8 @@ namespace Toolkit.Tweens.Transitions
 		{
 			Sequence sequence = DOTween.Sequence();
 
-			foreach (TweenTransition behaviour in Transitions)
-				sequence.Append(behaviour.PlayIn());
+			foreach (TweenTransition transition in Transitions)
+				sequence.Append(transition.PlayIn());
 
 			return sequence;
 		}
@@ -27,8 +27,8 @@ namespace Toolkit.Tweens.Transitions
 			Sequence sequence = DOTween.Sequence();
 
 			// In reversed order.
-			foreach (TweenTransition behaviour in Transitions.Reverse())
-				sequence.Append(behaviour.PlayOut());
+			foreach (TweenTransition transition in Transitions.Reverse())
+				sequence.Append(transition.PlayOut());
 
 			return sequence;
 		}

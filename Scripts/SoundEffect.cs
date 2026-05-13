@@ -23,7 +23,8 @@ namespace Toolkit.Tweens
 
 		public AudioSource AudioSource => _audioSource;
 		public float Duration => OverrideClipDuration ? _duration : _audioSource.clip.length;
-		private readonly TweenCallback<float> EmptyVirtualUpdate = _ => { };
+
+		private readonly TweenCallback<float> _emptyVirtualUpdate = _ => { };
 
 		private void Awake()
 		{
@@ -50,7 +51,7 @@ namespace Toolkit.Tweens
 			if (duration <= 0)
 				Debug.LogError("Cannot play audio with zero or negative duration");
 
-			return DOVirtual.Float(0, duration, duration, EmptyVirtualUpdate)
+			return DOVirtual.Float(0, duration, duration, _emptyVirtualUpdate)
 				.OnStart(() => _audioSource.Play())
 				.OnComplete(() => _audioSource.Stop());
 		}
