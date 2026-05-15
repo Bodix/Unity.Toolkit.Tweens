@@ -1,17 +1,42 @@
 ﻿// Copyright © 2025 Bogdan Nikolayev <bodix321@gmail.com>
 // All Rights Reserved
 
+using System;
 using DG.Tweening;
+using Evolutex.Evolunity.Components.Animations;
+using Evolutex.Evolunity.Components.UI;
 using NaughtyAttributes;
+using Toolkit.Tweens.Extensions;
 using UnityEngine;
 
 namespace Toolkit.Tweens
 {
-	public abstract class TweenTransition : MonoBehaviour
+	public abstract class TweenTransition : MonoBehaviour, IShowHideAnimations
 	{
+		public IAnimation ShowAnimation => new TransitionShowAnimation(this);
+		public IAnimation HideAnimation => new TransitionHideAnimation(this);
+
 		public abstract Tween PlayIn();
 
 		public abstract Tween PlayOut();
+
+		public void PlayShow(Action onStart = null, Action onComplete = null)
+		{
+			Tween tween = PlayIn();
+			if (onStart != null)
+				tween.AddOnStart(onStart.Invoke);
+			if (onComplete != null)
+				tween.AddOnComplete(onComplete.Invoke);
+		}
+
+		public void PlayHide(Action onStart = null, Action onComplete = null)
+		{
+			Tween tween = PlayOut();
+			if (onStart != null)
+				tween.AddOnStart(onStart.Invoke);
+			if (onComplete != null)
+				tween.AddOnComplete(onComplete.Invoke);
+		}
 
 		[Button("Play In")]
 		protected void TestPlayIn()

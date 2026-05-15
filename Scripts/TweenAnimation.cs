@@ -1,15 +1,27 @@
 ﻿// Copyright © 2025 Bogdan Nikolayev <bodix321@gmail.com>
 // All Rights Reserved
 
+using System;
 using DG.Tweening;
+using Evolutex.Evolunity.Components.Animations;
 using NaughtyAttributes;
+using Toolkit.Tweens.Extensions;
 using UnityEngine;
 
 namespace Toolkit.Tweens
 {
-	public abstract class TweenAnimation : MonoBehaviour
+	public abstract class TweenAnimation : MonoBehaviour, IAnimation
 	{
 		public abstract Tween Play();
+
+		public void Play(Action onStart = null, Action onComplete = null)
+		{
+			Tween tween = Play();
+			if (onStart != null)
+				tween.AddOnStart(onStart.Invoke);
+			if (onComplete != null)
+				tween.AddOnComplete(onComplete.Invoke);
+		}
 
 		[Button("Play")]
 		protected void TestPlay()
