@@ -45,31 +45,31 @@ namespace Toolkit.Tweens.Transitions
 		}
 
 #if UNITY_EDITOR
-		[Button("Copy current transform to " + nameof(TargetTransform))]
-		private void SetTargetTransformData()
+		[Button("Copy current RectTransform to " + nameof(TargetTransform))]
+		private void CopyTransformToTarget()
 		{
-			Undo.RecordObject(Target, "Copy current transform to " + nameof(TargetTransform));
+			Undo.RecordObject(Target, "Copy current RectTransform to " + nameof(TargetTransform));
 			TargetTransform = Target.GetData();
 		}
 
-		[Button("Copy current transform to " + nameof(InitialTransform))]
-		private void SetInitialTransformData()
+		[Button("Copy current RectTransform to " + nameof(InitialTransform))]
+		private void CopyTransformToInitial()
 		{
-			Undo.RecordObject(Target, "Copy current transform to " + nameof(InitialTransform));
+			Undo.RecordObject(Target, "Copy current RectTransform to " + nameof(InitialTransform));
 			InitialTransform = Target.GetData();
 		}
 
-		[Button("Set current transform to " + nameof(TargetTransform))]
-		private void SetTransformToTarget()
+		[Button("Set current RectTransform from " + nameof(TargetTransform))]
+		private void SetTransformFromTarget()
 		{
-			Undo.RecordObject(Target, "Set current transform to " + nameof(TargetTransform));
+			Undo.RecordObject(Target, "Set current RectTransform from " + nameof(TargetTransform));
 			Target.SetData(TargetTransform);
 		}
 
-		[Button("Set current transform to " + nameof(InitialTransform))]
-		private void SetTransformToInitial()
+		[Button("Set current RectTransform from " + nameof(InitialTransform))]
+		private void SetTransformFromInitial()
 		{
-			Undo.RecordObject(Target, "Set current transform to " + nameof(InitialTransform));
+			Undo.RecordObject(Target, "Set current RectTransform from " + nameof(InitialTransform));
 			Target.SetData(InitialTransform);
 		}
 #endif
