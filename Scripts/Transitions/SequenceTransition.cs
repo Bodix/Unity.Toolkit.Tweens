@@ -1,8 +1,8 @@
 ﻿// Copyright © 2025 Bogdan Nikolayev <bodix321@gmail.com>
 // All Rights Reserved
 
+using Bodix.Evolunity.Extensions;
 using DG.Tweening;
-using Evolutex.Evolunity.Extensions;
 using UnityEngine.Serialization;
 
 namespace Toolkit.Tweens.Transitions

@@ -2,8 +2,8 @@
 // All Rights Reserved
 
 using System;
+using Bodix.Evolunity.Components;
 using DG.Tweening;
-using Evolutex.Evolunity.Components.Animations;
 using NaughtyAttributes;
 using Toolkit.Tweens.Extensions;
 using UnityEngine;

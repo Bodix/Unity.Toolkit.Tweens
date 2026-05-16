@@ -3,8 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using Bodix.Evolunity.Extensions;
 using DG.Tweening;
-using Evolutex.Evolunity.Extensions;
 using Toolkit.Tweens.Extensions;
 
 namespace Toolkit.Tweens.Screens

@@ -1,5 +1,5 @@
 ﻿using System;
-using Evolutex.Evolunity.Components.Animations;
+using Bodix.Evolunity.Components;
 
 namespace Toolkit.Tweens
 {
