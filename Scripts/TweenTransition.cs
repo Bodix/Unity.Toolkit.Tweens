@@ -4,7 +4,6 @@
 using System;
 using DG.Tweening;
 using Evolutex.Evolunity.Components.Animations;
-using Evolutex.Evolunity.Components.UI;
 using NaughtyAttributes;
 using Toolkit.Tweens.Extensions;
 using UnityEngine;

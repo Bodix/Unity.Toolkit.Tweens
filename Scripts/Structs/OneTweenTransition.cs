@@ -1,6 +1,5 @@
 ﻿using System;
 using Evolutex.Evolunity.Components.Animations;
-using Evolutex.Evolunity.Components.UI;
 
 namespace Toolkit.Tweens
 {
