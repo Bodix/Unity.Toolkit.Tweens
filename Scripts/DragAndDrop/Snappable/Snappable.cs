@@ -74,20 +74,25 @@ namespace Toolkit.Tweens.DragAndDrop
 			slot = null;
 			int hitsCount = Physics.RaycastNonAlloc(new Ray(transform.position, DirectionRotation * Direction),
 				_hitsBuffer, Distance, LayerMask);
+
 			if (hitsCount > 0)
 			{
+				float minDistance = float.MaxValue;
+
 				for (int i = 0; i < hitsCount; i++)
 				{
-					var potentialSlot = _hitsBuffer[i].collider.GetComponent<ISnappingSlot<TTarget>>();
-					if (potentialSlot != null)
+					RaycastHit hit = _hitsBuffer[i];
+					var potentialSlot = hit.collider.GetComponent<ISnappingSlot<TTarget>>();
+
+					if (potentialSlot != null && hit.distance < minDistance)
 					{
+						minDistance = hit.distance;
 						slot = potentialSlot;
-						return true;
 					}
 				}
 			}
 
-			return false;
+			return slot != null;
 		}
 
 		private void ResetPreviewSlot()

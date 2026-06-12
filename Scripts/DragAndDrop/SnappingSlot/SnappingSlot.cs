@@ -10,15 +10,19 @@ namespace Toolkit.Tweens.DragAndDrop
 		[SerializeField]
 		protected MeshRenderer[] _meshes;
 
+		private static readonly int ColorProperty = Shader.PropertyToID("_Color");
 		private Color[] _initialColors;
+		private MaterialPropertyBlock _propertyBlock;
 
 		public Vector3 Position => transform.position;
 
 		private void Awake()
 		{
 			_initialColors = new Color[_meshes.Length];
+			_propertyBlock = new MaterialPropertyBlock();
+
 			for (int i = 0; i < _meshes.Length; i++)
-				_initialColors[i] = _meshes[i].material.color;
+				_initialColors[i] = _meshes[i].sharedMaterial.color;
 		}
 
 		public abstract bool IsSnappableWith(TTarget other);
@@ -35,14 +39,22 @@ namespace Toolkit.Tweens.DragAndDrop
 			for (int i = 0; i < _meshes.Length; i++)
 			{
 				if (i < _initialColors.Length)
-					_meshes[i].material.color = _initialColors[i];
+				{
+					_meshes[i].GetPropertyBlock(_propertyBlock);
+					_propertyBlock.SetColor(ColorProperty, _initialColors[i]);
+					_meshes[i].SetPropertyBlock(_propertyBlock);
+				}
 			}
 		}
 
 		protected void SetMeshesColor(Color color)
 		{
 			foreach (MeshRenderer mesh in _meshes)
-				mesh.material.color = color;
+			{
+				mesh.GetPropertyBlock(_propertyBlock);
+				_propertyBlock.SetColor(ColorProperty, color);
+				mesh.SetPropertyBlock(_propertyBlock);
+			}
 		}
 	}
 }
