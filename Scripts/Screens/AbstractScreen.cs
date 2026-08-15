@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Toolkit.Tweens.Screens
 {
-	public abstract class AbstractScreen : MonoBehaviour, IBackHandler
+	public abstract class AbstractScreen : MonoBehaviour, IBackNavigationHandler
 	{
 		public virtual bool IsEnabled
 		{
