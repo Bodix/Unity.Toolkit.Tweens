@@ -33,6 +33,14 @@ namespace Toolkit.Tweens.Screens
 			if (!IsEnabled || ScreenStack.CurrentScreen != this)
 				return false;
 
+			if (ScreenStack.IsInTransition)
+			{
+				// We return true to “catch” the user's click and prevent them from 
+				// closing something else or exiting the game while the animation is playing.
+				// But we don't call Pop() itself.
+				return true;
+			}
+
 			Pop();
 
 			return true;
