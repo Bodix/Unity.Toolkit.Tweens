@@ -9,13 +9,6 @@ namespace Toolkit.Tweens.Screens
 {
 	public abstract class AbstractScreen : MonoBehaviour, IBackHandler
 	{
-		protected IBackNavigationService BackNavigationService;
-
-		public virtual void Construct(IBackNavigationService backNavigationService)
-		{
-			BackNavigationService = backNavigationService;
-		}
-
 		public virtual bool IsEnabled
 		{
 			get => gameObject.activeSelf;
@@ -25,13 +18,11 @@ namespace Toolkit.Tweens.Screens
 		public virtual void Show()
 		{
 			IsEnabled = true;
-			BackNavigationService?.Register(this);
 		}
 
 		public virtual void Hide()
 		{
 			IsEnabled = false;
-			BackNavigationService?.Unregister(this);
 		}
 
 		/// <summary>
