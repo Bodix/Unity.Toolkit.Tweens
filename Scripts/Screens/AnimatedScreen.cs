@@ -4,13 +4,12 @@
 using DG.Tweening;
 using Toolkit.Tweens.Extensions;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Toolkit.Tweens.Screens
 {
 	public class AnimatedScreen : Screen
 	{
-		[SerializeField, FormerlySerializedAs("_tweenBehaviour")]
+		[SerializeField]
 		private TweenTransition _transition;
 
 		public Tween ShowTween => _transition.PlayIn().AddOnStart(Show);
