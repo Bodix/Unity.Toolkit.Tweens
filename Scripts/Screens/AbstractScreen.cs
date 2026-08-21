@@ -56,14 +56,14 @@ namespace Toolkit.Tweens.Screens
 			return ScreenStack.Pop(this);
 		}
 
-		public void PushImmediately()
+		public virtual Tween PushImmediately()
 		{
-			ScreenStack.PushImmediately(this);
+			return ScreenStack.PushImmediately(this);
 		}
 
-		public void PopImmediately()
+		public virtual Tween PopImmediately()
 		{
-			ScreenStack.PopImmediately(this);
+			return ScreenStack.PopImmediately(this);
 		}
 	}
 }
