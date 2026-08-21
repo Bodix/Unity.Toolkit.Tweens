@@ -88,12 +88,7 @@ namespace Toolkit.Tweens.Screens
 				Sequence sequence = DOTween.Sequence();
 				sequence.PrependCallback(() => ValidatePushTween(sequence, screen));
 				sequence.Append(animatedScreen.ShowTween
-					.AddOnStart(() =>
-					{
-						foreach (Screen otherScreen in Stack)
-							if (otherScreen.IsEnabled)
-								otherScreen.Hide();
-					})
+					.AddOnStart(HideAllActiveScreensInstantly)
 					.AddOnComplete(() => Stack.Push(screen)));
 
 				sequence.OnKill(() => transition = null);
@@ -104,10 +99,7 @@ namespace Toolkit.Tweens.Screens
 				if (!ValidatePush(screen))
 					return DOTween.Sequence();
 
-				foreach (Screen otherScreen in Stack)
-					if (otherScreen.IsEnabled)
-						otherScreen.Hide();
-
+				HideAllActiveScreensInstantly();
 				screen.Show();
 				Stack.Push(screen);
 				return DOTween.Sequence();
@@ -151,6 +143,51 @@ namespace Toolkit.Tweens.Screens
 		public static void Clear()
 		{
 			Stack.Clear();
+		}
+
+		private static void AppendShow(this Sequence sequence, Screen screen)
+		{
+			if (screen is AnimatedScreen animatedScreen)
+				sequence.Append(animatedScreen.ShowTween);
+			else
+				sequence.AppendCallback(screen.Show);
+		}
+
+		private static void AppendHide(this Sequence sequence, Screen screen)
+		{
+			if (screen is AnimatedScreen animatedScreen)
+			{
+				// Uncomment if you want to hide all screens in parallel.
+				// sequence.Join(animatedScreen.HideTween);
+				sequence.Append(animatedScreen.HideTween);
+			}
+			else
+			{
+				sequence.AppendCallback(screen.Hide);
+			}
+		}
+
+		private static void HideAllActiveScreensInstantly()
+		{
+			foreach (Screen otherScreen in Stack)
+				if (otherScreen.IsEnabled)
+					otherScreen.Hide();
+		}
+
+		/// <summary>
+		/// Validates if a transition can be started securely to prevent sequence overlaps.
+		/// </summary>
+		private static bool ValidateTweenTransition(Screen screen)
+		{
+			if (IsInTransition)
+			{
+				if (screen.LogWarnings)
+					Debug.LogWarning("Failed to execute transition. Another transition is already in progress.");
+
+				return false;
+			}
+
+			return true;
 		}
 
 		private static bool ValidatePush(Screen screen)
