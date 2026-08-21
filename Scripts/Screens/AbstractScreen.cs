@@ -9,6 +9,12 @@ namespace Toolkit.Tweens.Screens
 {
 	public abstract class AbstractScreen : MonoBehaviour, IBackNavigationHandler
 	{
+		[SerializeField]
+		[Tooltip("Determines whether to log warnings when invalid operations are performed on this screen.")]
+		private bool _logWarnings = true;
+
+		public bool LogWarnings => _logWarnings;
+
 		public virtual bool IsEnabled
 		{
 			get => gameObject.activeSelf;

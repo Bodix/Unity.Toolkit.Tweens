@@ -157,9 +157,10 @@ namespace Toolkit.Tweens.Screens
 		{
 			if (Stack.Contains(screen))
 			{
-				Debug.LogWarning(CurrentScreen == screen
-					? "Failed to show the screen that is already shown."
-					: "Failed to show the screen that is already shown under the current screen.");
+				if (screen.LogWarnings)
+					Debug.LogWarning(CurrentScreen == screen
+						? "Failed to show the screen that is already shown."
+						: "Failed to show the screen that is already shown under the current screen.");
 
 				return false;
 			}
@@ -174,7 +175,8 @@ namespace Toolkit.Tweens.Screens
 
 			if (transition != tween)
 			{
-				Debug.LogWarning("Failed to show the screen during the transition.");
+				if (screen.LogWarnings)
+					Debug.LogWarning("Failed to show the screen during the transition.");
 
 				tween.Kill();
 
@@ -192,9 +194,10 @@ namespace Toolkit.Tweens.Screens
 		{
 			if (screen != CurrentScreen)
 			{
-				Debug.LogWarning(Stack.Contains(screen)
-					? "Failed to hide the screen that is under the current screen."
-					: "Failed to hide the screen that is not managed by screen stack.");
+				if (screen.LogWarnings)
+					Debug.LogWarning(Stack.Contains(screen)
+						? "Failed to hide the screen that is under the current screen."
+						: "Failed to hide the screen that is not managed by screen stack.");
 
 				return false;
 			}
@@ -209,7 +212,8 @@ namespace Toolkit.Tweens.Screens
 
 			if (transition != tween)
 			{
-				Debug.LogWarning("Failed to hide the screen during the transition.");
+				if (screen.LogWarnings)
+					Debug.LogWarning("Failed to hide the screen during the transition.");
 
 				tween.Kill();
 
