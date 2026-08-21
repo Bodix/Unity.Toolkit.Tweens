@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Toolkit.Tweens.Screens
 {
-	public abstract class AbstractScreen : MonoBehaviour, IBackNavigationHandler
+	public abstract class Screen : MonoBehaviour, IBackNavigationHandler
 	{
 		[SerializeField]
 		[Tooltip("Determines whether to log warnings when invalid operations are performed on this screen.")]

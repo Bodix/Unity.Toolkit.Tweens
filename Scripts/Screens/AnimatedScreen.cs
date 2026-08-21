@@ -8,12 +8,12 @@ using UnityEngine.Serialization;
 
 namespace Toolkit.Tweens.Screens
 {
-	public class AnimatedScreen : AbstractAnimatedScreen
+	public abstract class AnimatedScreen : Screen
 	{
 		[SerializeField, FormerlySerializedAs("_tweenBehaviour")]
 		private TweenTransition _transition;
 
-		public override Tween ShowTween => _transition.PlayIn().AddOnStart(Show);
-		public override Tween HideTween => _transition.PlayOut().AddOnComplete(Hide);
+		public Tween ShowTween => _transition.PlayIn().AddOnStart(Show);
+		public Tween HideTween => _transition.PlayOut().AddOnComplete(Hide);
 	}
 }

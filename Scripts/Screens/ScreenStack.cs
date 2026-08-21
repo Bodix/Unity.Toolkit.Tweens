@@ -12,23 +12,23 @@ namespace Toolkit.Tweens.Screens
 {
 	public static class ScreenStack
 	{
-		private static readonly Stack<AbstractScreen> Stack = new Stack<AbstractScreen>(3);
+		private static readonly Stack<Screen> Stack = new Stack<Screen>(3);
 		private static Tween transition;
 
-		public static AbstractScreen CurrentScreen => Stack.IsEmpty() ? null : Stack.Peek();
+		public static Screen CurrentScreen => Stack.IsEmpty() ? null : Stack.Peek();
 		public static bool IsInTransition => transition != null;
 
-		public static Tween Push(AbstractScreen screen)
+		public static Tween Push(Screen screen)
 		{
 			Sequence sequence = DOTween.Sequence();
 			sequence.PrependCallback(() => ValidatePushTween(sequence, screen));
 
-			foreach (AbstractScreen otherScreen in Stack)
+			foreach (Screen otherScreen in Stack)
 			{
 				if (!otherScreen.IsEnabled)
 					continue;
 
-				if (otherScreen is AbstractAnimatedScreen otherAnimatedScreen)
+				if (otherScreen is AnimatedScreen otherAnimatedScreen)
 					// Uncomment if you want to hide all screens in parallel.
 					// sequence.Join(otherAnimatedScreen.HideTween);
 					sequence.Append(otherAnimatedScreen.HideTween);
@@ -36,7 +36,7 @@ namespace Toolkit.Tweens.Screens
 					sequence.AppendCallback(otherScreen.Hide);
 			}
 
-			if (screen is AbstractAnimatedScreen animatedScreen)
+			if (screen is AnimatedScreen animatedScreen)
 				sequence.Append(animatedScreen.ShowTween
 					.AddOnComplete(() => Stack.Push(screen)));
 			else
@@ -50,12 +50,12 @@ namespace Toolkit.Tweens.Screens
 			return sequence;
 		}
 
-		public static Tween Pop(AbstractScreen screen)
+		public static Tween Pop(Screen screen)
 		{
 			Sequence sequence = DOTween.Sequence();
 			sequence.PrependCallback(() => ValidatePopTween(sequence, screen));
 
-			if (screen is AbstractAnimatedScreen animatedScreen)
+			if (screen is AnimatedScreen animatedScreen)
 				sequence.Append(animatedScreen.HideTween
 					.AddOnComplete(() => Stack.Pop()));
 			else
@@ -65,9 +65,9 @@ namespace Toolkit.Tweens.Screens
 					Stack.Pop();
 				});
 
-			AbstractScreen nextScreen = GetNextScreen();
+			Screen nextScreen = GetNextScreen();
 			if (nextScreen != null)
-				if (nextScreen is AbstractAnimatedScreen nextAnimatedScreen)
+				if (nextScreen is AnimatedScreen nextAnimatedScreen)
 					sequence.Append(nextAnimatedScreen.ShowTween);
 				else
 					sequence.AppendCallback(nextScreen.Show);
@@ -81,16 +81,16 @@ namespace Toolkit.Tweens.Screens
 			return Pop(CurrentScreen);
 		}
 
-		public static Tween PushImmediately(AbstractScreen screen)
+		public static Tween PushImmediately(Screen screen)
 		{
-			if (screen is AbstractAnimatedScreen animatedScreen)
+			if (screen is AnimatedScreen animatedScreen)
 			{
 				Sequence sequence = DOTween.Sequence();
 				sequence.PrependCallback(() => ValidatePushTween(sequence, screen));
 				sequence.Append(animatedScreen.ShowTween
 					.AddOnStart(() =>
 					{
-						foreach (AbstractScreen otherScreen in Stack)
+						foreach (Screen otherScreen in Stack)
 							if (otherScreen.IsEnabled)
 								otherScreen.Hide();
 					})
@@ -104,7 +104,7 @@ namespace Toolkit.Tweens.Screens
 				if (!ValidatePush(screen))
 					return DOTween.Sequence();
 
-				foreach (AbstractScreen otherScreen in Stack)
+				foreach (Screen otherScreen in Stack)
 					if (otherScreen.IsEnabled)
 						otherScreen.Hide();
 
@@ -114,9 +114,9 @@ namespace Toolkit.Tweens.Screens
 			}
 		}
 
-		public static Tween PopImmediately(AbstractScreen screen)
+		public static Tween PopImmediately(Screen screen)
 		{
-			if (screen is AbstractAnimatedScreen animatedScreen)
+			if (screen is AnimatedScreen animatedScreen)
 			{
 				Sequence sequence = DOTween.Sequence();
 				sequence.PrependCallback(() => ValidatePopTween(sequence, screen));
@@ -153,7 +153,7 @@ namespace Toolkit.Tweens.Screens
 			Stack.Clear();
 		}
 
-		private static bool ValidatePush(AbstractScreen screen)
+		private static bool ValidatePush(Screen screen)
 		{
 			if (Stack.Contains(screen))
 			{
@@ -168,7 +168,7 @@ namespace Toolkit.Tweens.Screens
 			return true;
 		}
 
-		private static void ValidatePushTween(Tween tween, AbstractScreen screen)
+		private static void ValidatePushTween(Tween tween, Screen screen)
 		{
 			if (transition == null || !transition.IsActive() || transition.IsComplete())
 				transition = tween;
@@ -190,7 +190,7 @@ namespace Toolkit.Tweens.Screens
 			}
 		}
 
-		private static bool ValidatePop(AbstractScreen screen)
+		private static bool ValidatePop(Screen screen)
 		{
 			if (screen != CurrentScreen)
 			{
@@ -205,7 +205,7 @@ namespace Toolkit.Tweens.Screens
 			return true;
 		}
 
-		private static void ValidatePopTween(Tween tween, AbstractScreen screen)
+		private static void ValidatePopTween(Tween tween, Screen screen)
 		{
 			if (transition == null || !transition.IsActive() || transition.IsComplete())
 				transition = tween;
@@ -227,7 +227,7 @@ namespace Toolkit.Tweens.Screens
 			}
 		}
 
-		private static AbstractScreen GetNextScreen()
+		private static Screen GetNextScreen()
 		{
 			return Stack.ElementAtOrDefault(1);
 		}
