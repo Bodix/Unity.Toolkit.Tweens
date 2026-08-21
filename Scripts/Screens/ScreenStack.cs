@@ -1,12 +1,12 @@
 ﻿// Copyright © 2025 Bogdan Nikolayev <bodix321@gmail.com>
 // All Rights Reserved
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Bodix.Evolunity.Extensions;
 using DG.Tweening;
 using Toolkit.Tweens.Extensions;
+using UnityEngine;
 
 namespace Toolkit.Tweens.Screens
 {
@@ -101,7 +101,8 @@ namespace Toolkit.Tweens.Screens
 			}
 			else
 			{
-				CheckPushForExceptions(screen);
+				if (!ValidatePush(screen))
+					return DOTween.Sequence();
 
 				foreach (AbstractScreen otherScreen in Stack)
 					if (otherScreen.IsEnabled)
@@ -131,7 +132,8 @@ namespace Toolkit.Tweens.Screens
 			}
 			else
 			{
-				CheckPopForExceptions(screen);
+				if (!ValidatePop(screen))
+					return DOTween.Sequence();
 
 				screen.Hide();
 				Stack.Pop();
@@ -151,61 +153,73 @@ namespace Toolkit.Tweens.Screens
 			Stack.Clear();
 		}
 
-		private static void CheckPushForExceptions(AbstractScreen screen)
+		private static bool ValidatePush(AbstractScreen screen)
 		{
 			if (Stack.Contains(screen))
-				if (CurrentScreen == screen)
-					throw new InvalidOperationException("Failed to show the screen that is already shown");
-				else
-					throw new InvalidOperationException(
-						"Failed to show the screen that is already shown under the current screen");
+			{
+				Debug.LogWarning(CurrentScreen == screen
+					? "Failed to show the screen that is already shown."
+					: "Failed to show the screen that is already shown under the current screen.");
+
+				return false;
+			}
+
+			return true;
 		}
 
 		private static void ValidatePushTween(Tween tween, AbstractScreen screen)
 		{
-			try
-			{
-				if (transition == null || !transition.IsActive() || transition.IsComplete())
-					transition = tween;
-				if (transition != tween)
-					throw new InvalidOperationException("Failed to show the screen during the transition");
+			if (transition == null || !transition.IsActive() || transition.IsComplete())
+				transition = tween;
 
-				CheckPushForExceptions(screen);
-			}
-			catch (InvalidOperationException)
+			if (transition != tween)
 			{
+				Debug.LogWarning("Failed to show the screen during the transition.");
+
 				tween.Kill();
-				throw;
+
+				return;
+			}
+
+			if (!ValidatePush(screen))
+			{
+				transition = null;
+				tween.Kill();
 			}
 		}
 
-		private static void CheckPopForExceptions(AbstractScreen screen)
+		private static bool ValidatePop(AbstractScreen screen)
 		{
 			if (screen != CurrentScreen)
-				if (Stack.Contains(screen))
-					throw new InvalidOperationException(
-						"Failed to hide the screen that is under the current screen");
-				else
-					throw new InvalidOperationException(
-						"Failed to hide the screen that is not managed by screen stack");
+			{
+				Debug.LogWarning(Stack.Contains(screen)
+					? "Failed to hide the screen that is under the current screen."
+					: "Failed to hide the screen that is not managed by screen stack.");
+
+				return false;
+			}
+
+			return true;
 		}
 
 		private static void ValidatePopTween(Tween tween, AbstractScreen screen)
 		{
-			try
-			{
-				if (transition == null || !transition.IsActive() || transition.IsComplete())
-					transition = tween;
-				if (transition != tween)
-					throw new InvalidOperationException("Failed to hide the screen during the transition");
+			if (transition == null || !transition.IsActive() || transition.IsComplete())
+				transition = tween;
 
-				CheckPopForExceptions(screen);
-			}
-			catch (InvalidOperationException)
+			if (transition != tween)
 			{
+				Debug.LogWarning("Failed to hide the screen during the transition.");
+
 				tween.Kill();
 
-				throw;
+				return;
+			}
+
+			if (!ValidatePop(screen))
+			{
+				transition = null;
+				tween.Kill();
 			}
 		}
 
