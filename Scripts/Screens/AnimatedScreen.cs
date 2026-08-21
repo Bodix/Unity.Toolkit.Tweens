@@ -8,7 +8,7 @@ using UnityEngine.Serialization;
 
 namespace Toolkit.Tweens.Screens
 {
-	public abstract class AnimatedScreen : Screen
+	public class AnimatedScreen : Screen
 	{
 		[SerializeField, FormerlySerializedAs("_tweenBehaviour")]
 		private TweenTransition _transition;
