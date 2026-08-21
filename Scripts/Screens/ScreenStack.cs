@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Bodix.Evolunity.Extensions;
 using DG.Tweening;
-using Toolkit.Tweens.Extensions;
 using UnityEngine;
 
 namespace Toolkit.Tweens.Screens
@@ -22,31 +21,13 @@ namespace Toolkit.Tweens.Screens
 		{
 			Sequence sequence = DOTween.Sequence();
 			sequence.PrependCallback(() => ValidatePushTween(sequence, screen));
-
 			foreach (Screen otherScreen in Stack)
-			{
-				if (!otherScreen.IsEnabled)
-					continue;
-
-				if (otherScreen is AnimatedScreen otherAnimatedScreen)
-					// Uncomment if you want to hide all screens in parallel.
-					// sequence.Join(otherAnimatedScreen.HideTween);
-					sequence.Append(otherAnimatedScreen.HideTween);
-				else
-					sequence.AppendCallback(otherScreen.Hide);
-			}
-
-			if (screen is AnimatedScreen animatedScreen)
-				sequence.Append(animatedScreen.ShowTween
-					.AddOnComplete(() => Stack.Push(screen)));
-			else
-				sequence.OnComplete(() =>
-				{
-					screen.Show();
-					Stack.Push(screen);
-				});
-
+				if (otherScreen.IsEnabled)
+					sequence.AppendHide(otherScreen);
+			sequence.AppendShow(screen);
+			sequence.AppendCallback(() => Stack.Push(screen));
 			sequence.OnKill(() => transition = null);
+
 			return sequence;
 		}
 
@@ -54,25 +35,13 @@ namespace Toolkit.Tweens.Screens
 		{
 			Sequence sequence = DOTween.Sequence();
 			sequence.PrependCallback(() => ValidatePopTween(sequence, screen));
-
-			if (screen is AnimatedScreen animatedScreen)
-				sequence.Append(animatedScreen.HideTween
-					.AddOnComplete(() => Stack.Pop()));
-			else
-				sequence.AppendCallback(() =>
-				{
-					screen.Hide();
-					Stack.Pop();
-				});
-
+			sequence.AppendHide(screen);
+			sequence.AppendCallback(() => Stack.Pop());
 			Screen nextScreen = GetNextScreen();
 			if (nextScreen != null)
-				if (nextScreen is AnimatedScreen nextAnimatedScreen)
-					sequence.Append(nextAnimatedScreen.ShowTween);
-				else
-					sequence.AppendCallback(nextScreen.Show);
-
+				sequence.AppendShow(nextScreen);
 			sequence.OnKill(() => transition = null);
+
 			return sequence;
 		}
 
@@ -87,11 +56,11 @@ namespace Toolkit.Tweens.Screens
 			{
 				Sequence sequence = DOTween.Sequence();
 				sequence.PrependCallback(() => ValidatePushTween(sequence, screen));
-				sequence.Append(animatedScreen.ShowTween
-					.AddOnStart(HideAllActiveScreensInstantly)
-					.AddOnComplete(() => Stack.Push(screen)));
-
+				sequence.AppendCallback(HideAllActiveScreensInstantly);
+				sequence.AppendShow(animatedScreen);
+				sequence.AppendCallback(() => Stack.Push(screen));
 				sequence.OnKill(() => transition = null);
+
 				return sequence;
 			}
 			else
@@ -112,14 +81,14 @@ namespace Toolkit.Tweens.Screens
 			{
 				Sequence sequence = DOTween.Sequence();
 				sequence.PrependCallback(() => ValidatePopTween(sequence, screen));
-				sequence.Append(animatedScreen.HideTween
-					.AddOnComplete(() =>
-					{
-						Stack.Pop();
-						CurrentScreen?.Show();
-					}));
-
+				sequence.AppendHide(animatedScreen);
+				sequence.AppendCallback(() =>
+				{
+					Stack.Pop();
+					CurrentScreen?.Show();
+				});
 				sequence.OnKill(() => transition = null);
+
 				return sequence;
 			}
 			else
