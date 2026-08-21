@@ -16,7 +16,7 @@ namespace Toolkit.Tweens.Screens
 		private static Tween transition;
 
 		public static Screen CurrentScreen => Stack.IsEmpty() ? null : Stack.Peek();
-		public static bool IsInTransition => transition != null;
+		public static bool IsInTransition => transition != null && transition.IsActive() && !transition.IsComplete();
 
 		public static Tween Push(Screen screen)
 		{
@@ -174,20 +174,32 @@ namespace Toolkit.Tweens.Screens
 					otherScreen.Hide();
 		}
 
-		/// <summary>
-		/// Validates if a transition can be started securely to prevent sequence overlaps.
-		/// </summary>
-		private static bool ValidateTweenTransition(Screen screen)
+		private static bool ValidateAndSetTweenTransition(Screen screen, Tween tween)
 		{
-			if (IsInTransition)
+			if (!IsInTransition)
+				transition = tween;
+
+			if (transition != tween)
 			{
 				if (screen.LogWarnings)
 					Debug.LogWarning("Failed to execute transition. Another transition is already in progress.");
+
+				tween.Kill();
 
 				return false;
 			}
 
 			return true;
+		}
+
+		private static void ValidatePushTween(Tween tween, Screen screen)
+		{
+			if (ValidateAndSetTweenTransition(screen, tween))
+				if (!ValidatePush(screen))
+				{
+					transition.Kill();
+					transition = null;
+				}
 		}
 
 		private static bool ValidatePush(Screen screen)
@@ -205,26 +217,14 @@ namespace Toolkit.Tweens.Screens
 			return true;
 		}
 
-		private static void ValidatePushTween(Tween tween, Screen screen)
+		private static void ValidatePopTween(Tween tween, Screen screen)
 		{
-			if (transition == null || !transition.IsActive() || transition.IsComplete())
-				transition = tween;
-
-			if (transition != tween)
-			{
-				if (screen.LogWarnings)
-					Debug.LogWarning("Failed to show the screen during the transition.");
-
-				tween.Kill();
-
-				return;
-			}
-
-			if (!ValidatePush(screen))
-			{
-				transition = null;
-				tween.Kill();
-			}
+			if (ValidateAndSetTweenTransition(screen, tween))
+				if (!ValidatePop(screen))
+				{
+					transition.Kill();
+					transition = null;
+				}
 		}
 
 		private static bool ValidatePop(Screen screen)
@@ -240,28 +240,6 @@ namespace Toolkit.Tweens.Screens
 			}
 
 			return true;
-		}
-
-		private static void ValidatePopTween(Tween tween, Screen screen)
-		{
-			if (transition == null || !transition.IsActive() || transition.IsComplete())
-				transition = tween;
-
-			if (transition != tween)
-			{
-				if (screen.LogWarnings)
-					Debug.LogWarning("Failed to hide the screen during the transition.");
-
-				tween.Kill();
-
-				return;
-			}
-
-			if (!ValidatePop(screen))
-			{
-				transition = null;
-				tween.Kill();
-			}
 		}
 
 		private static Screen GetNextScreen()
