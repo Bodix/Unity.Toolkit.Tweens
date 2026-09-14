@@ -4,7 +4,8 @@
 using System;
 using Bodix.Evolunity.Components;
 using DG.Tweening;
-using NaughtyAttributes;
+using PerfectCore.NaughtyAttributes;
+using PerfectCore;
 using Toolkit.Tweens.Extensions;
 using UnityEngine;
 

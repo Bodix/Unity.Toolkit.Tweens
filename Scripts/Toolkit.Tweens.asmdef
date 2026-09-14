@@ -3,8 +3,10 @@
     "references": [
         "Evolunity.Runtime",
         "Unity.TextMeshPro",
-        "NaughtyAttributes.Core",
-        "DOTween.Modules"
+        "PerfectCore.NaughtyAttributes",
+        "DOTween.Modules",
+        "PerfectCore",
+        "PerfectCore.PerfectUI"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
