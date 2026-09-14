@@ -2,7 +2,6 @@
 // All Rights Reserved
 
 using System;
-using Bodix.Evolunity.Components;
 using DG.Tweening;
 using PerfectCore.NaughtyAttributes;
 using PerfectCore;

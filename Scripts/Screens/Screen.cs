@@ -1,7 +1,6 @@
 ﻿// Copyright © 2025 Bogdan Nikolayev <bodix321@gmail.com>
 // All Rights Reserved
 
-using Bodix.Evolunity.Services;
 using DG.Tweening;
 using PerfectCore;
 using UnityEngine;
