@@ -114,7 +114,7 @@ namespace Toolkit.Tweens.DragAndDrop
 				for (int i = 0; i < hitCount; i++)
 				{
 					RaycastHit hit = _hitsBuffer[i];
-					var currentDraggable = hit.collider.GetComponent<IDraggable>();
+					IDraggable currentDraggable = hit.collider.GetComponent<IDraggable>();
 
 					if (currentDraggable != null && hit.distance < minDistance)
 					{

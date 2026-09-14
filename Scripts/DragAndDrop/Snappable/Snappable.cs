@@ -82,7 +82,7 @@ namespace Toolkit.Tweens.DragAndDrop
 				for (int i = 0; i < hitsCount; i++)
 				{
 					RaycastHit hit = _hitsBuffer[i];
-					var potentialSlot = hit.collider.GetComponent<ISnappingSlot<TTarget>>();
+					ISnappingSlot<TTarget> potentialSlot = hit.collider.GetComponent<ISnappingSlot<TTarget>>();
 
 					if (potentialSlot != null && hit.distance < minDistance)
 					{

@@ -3,8 +3,8 @@
 
 using System;
 using DG.Tweening;
-using PerfectCore.NaughtyAttributes;
 using PerfectCore;
+using PerfectCore.NaughtyAttributes;
 using Toolkit.Tweens.Extensions;
 using UnityEngine;
 
