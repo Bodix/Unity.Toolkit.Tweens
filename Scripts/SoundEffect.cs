@@ -4,7 +4,7 @@
 using DG.Tweening;
 using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
-using PerfectCore.NaughtyAttributes;
+using PerfectCore.PerfectFoundation.NaughtyAttributes;
 using UnityEngine;
 
 namespace Toolkit.Tweens

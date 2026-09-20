@@ -2,8 +2,8 @@
 // All Rights Reserved
 
 using DG.Tweening;
-using PerfectCore;
-using PerfectCore.NaughtyAttributes;
+using PerfectCore.PerfectFoundation;
+using PerfectCore.PerfectFoundation.NaughtyAttributes;
 using UnityEditor;
 using UnityEngine;
 

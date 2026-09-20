@@ -2,7 +2,7 @@
 // All Rights Reserved
 
 using DG.Tweening;
-using PerfectCore;
+using PerfectCore.PerfectFoundation;
 using UnityEngine;
 
 namespace Toolkit.Tweens.Screens

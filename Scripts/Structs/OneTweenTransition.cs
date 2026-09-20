@@ -1,5 +1,5 @@
 ﻿using System;
-using PerfectCore;
+using PerfectCore.PerfectFoundation;
 
 namespace Toolkit.Tweens
 {

@@ -3,7 +3,7 @@
 
 using Bodix.Evolunity.Extensions;
 using DG.Tweening;
-using PerfectCore.NaughtyAttributes;
+using PerfectCore.PerfectFoundation.NaughtyAttributes;
 using Toolkit.Tweens.Extensions;
 using UnityEngine;
 

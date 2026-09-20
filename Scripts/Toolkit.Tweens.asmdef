@@ -1,11 +1,11 @@
 {
     "name": "Toolkit.Tweens",
     "references": [
-        "Evolunity.Runtime",
         "Unity.TextMeshPro",
-        "PerfectCore.NaughtyAttributes",
         "DOTween.Modules",
-        "PerfectCore",
+        "Evolunity.Runtime",
+        "PerfectCore.PerfectFoundation",
+        "PerfectCore.PerfectFoundation.NaughtyAttributes",
         "PerfectCore.PerfectUI"
     ],
     "includePlatforms": [],
