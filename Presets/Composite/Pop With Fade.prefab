@@ -1,0 +1,99 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1940164403935072475
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7771707650205609226}
+  - component: {fileID: 65845953373112517}
+  - component: {fileID: 747779419023856016}
+  - component: {fileID: 4508653554416526898}
+  m_Layer: 0
+  m_Name: Pop With Fade
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7771707650205609226
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1940164403935072475}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &65845953373112517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1940164403935072475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43b98257de0543aa8f36168f0b24cf21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IgnoreTimeScale: 1
+  InTransitions:
+  - Transition: {fileID: 747779419023856016}
+    Position: 0
+  - Transition: {fileID: 4508653554416526898}
+    Position: 0
+  InAnimations: []
+  OutTransitions: []
+  OutAnimations: []
+--- !u!114 &747779419023856016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1940164403935072475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d36b0a00538a4a71b5ad5ffdb10bd913, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IgnoreTimeScale: 1
+  _targetSource: 2
+  _target: {fileID: 0}
+  TargetScale: {x: 1, y: 1, z: 1}
+  InitialScale: {x: 0.85, y: 0.85, z: 1}
+  InDuration: 0.35
+  OutDuration: 0.2
+  InEase: 27
+  OutEase: 8
+--- !u!114 &4508653554416526898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1940164403935072475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 712b403f927624f4e9030ca9a205d340, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IgnoreTimeScale: 1
+  _targetSource: 2
+  _target: {fileID: 0}
+  TargetAlpha: 1
+  InitialAlpha: 0
+  InDuration: 0.2
+  OutDuration: 0.2
+  InEase: 6
+  OutEase: 5

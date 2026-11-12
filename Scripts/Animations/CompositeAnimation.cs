@@ -18,6 +18,8 @@ namespace Toolkit.Tweens.Animations
 				Tween tween = part.Animation.Play();
 
 				// To prewarm tween initial state.
+				// TODO: The prewarm fires OnStart of the part at once, so a part that starts a sound or an effect in OnStart
+				// starts it before its position. [#bug]
 				tween.ManualUpdate(float.MinValue, float.MinValue);
 
 				sequence.Insert(part.Position, tween);
