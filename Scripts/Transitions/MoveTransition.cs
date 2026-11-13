@@ -21,6 +21,10 @@ namespace Toolkit.Tweens.Transitions
 		public CustomizableEase InEase = new CustomizableEase(Ease.OutCubic);
 		public CustomizableEase OutEase = new CustomizableEase(Ease.InCubic);
 
+		// Closer than this to the position the transition set, the element is still where the transition put it:
+		// a RectTransform gives its position back with a float error, which grows when a layout resizes it.
+		private const float SamePositionTolerance = 0.01f;
+
 		private Vector3 _appliedOffset;
 		private Vector3 _lastPosition;
 
@@ -52,7 +56,8 @@ namespace Toolkit.Tweens.Transitions
 		{
 			Vector3 position = Target.localPosition;
 			// A position the transition did not set is the new own place.
-			Vector3 ownPosition = position == _lastPosition ? position - _appliedOffset : position;
+			bool isSetByTransition = (position - _lastPosition).sqrMagnitude < SamePositionTolerance * SamePositionTolerance;
+			Vector3 ownPosition = isSetByTransition ? _lastPosition - _appliedOffset : position;
 
 			_appliedOffset = offset;
 			_lastPosition = ownPosition + offset;
